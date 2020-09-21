@@ -22,6 +22,8 @@ const CLIENT_ID =
 const CLIENT_SECRET =
   "EJPl9qABuRP8rFs71ilSeN7cYn9ff8InXIgIEBge09szj7g_FamNo56u6_YyWyhgJ5WoHIRE4jW3_ent";
 const API_SERVER = "https://as-store.herokuapp.com/oauth";
+
+
 module.exports = async function authorize(req, res, next) {
   try {
     let code = req.query.code;
@@ -40,7 +42,7 @@ module.exports = async function authorize(req, res, next) {
 
     next();
   } catch (e) {
-    console.log("what the hell");
+    window.alert("what the hell");
 
     // next(`ERROR: ${e.message}`);
     next('hell');
