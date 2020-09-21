@@ -2,6 +2,7 @@
 
 const superagent = require("superagent");
 const users = require("./users.js");
+const base64 = require('base-64');
 
 /*
   Resources
@@ -37,13 +38,11 @@ module.exports = async function authorize(req, res, next) {
 };
 
 async function exchangeCodeForToken(code) {
+    let credential = base64.decode(`${CLIENT_ID}:${CLIENT_SECRET}`);
     let tokenResponse = await superagent.post(tokenServerUrl).send({
         code: code,
-        client_id: CLIENT_ID,
-        client_secret: CLIENT_SECRET,
-        redirect_uri: API_SERVER,
-        grant_type: 'client_credentials',
-      })
+        grant_type: 'authorization_code',
+      }).set('Authorization', `Basic ${credential}`)
 
   let access_token = tokenResponse.body.access_token;
 
