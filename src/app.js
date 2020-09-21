@@ -17,12 +17,12 @@ app.use(cors());
 app.use(express.static('./public'));
 
 // Routes
-// app.get('/oauth', oauth, (req, res) => {
-//   res.status(200).send(req.token);
-// });
-app.get('/oauth', (req, res) => {
-  res.status(200).send('nice');
+app.get('/oauth', oauth, (req, res) => {
+  res.status(200).send(req.token);
 });
+// app.get('/oauth', (req, res) => {
+//   res.status(200).send('nice');
+// });
 
 module.exports = {
   server: app,
