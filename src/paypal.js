@@ -40,7 +40,8 @@ module.exports = async function authorize(req, res, next) {
 
     next();
   } catch (e) {
-    next(`ERROR: ${e.message}`);
+    // next(`ERROR: ${e.message}`);
+    next('hell');
   }
 };
 
