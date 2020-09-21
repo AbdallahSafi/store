@@ -23,17 +23,14 @@ const CLIENT_SECRET =
   "EJPl9qABuRP8rFs71ilSeN7cYn9ff8InXIgIEBge09szj7g_FamNo56u6_YyWyhgJ5WoHIRE4jW3_ent";
 const API_SERVER = "https://as-store.herokuapp.com/oauth";
 
-
 module.exports = async function authorize(req, res, next) {
   try {
     let code1 = req.query.code;
 
     let remoteToken = await exchangeCodeForToken(code1);
-    
 
-    
     let remoteUser = await getRemoteUserInfo(remoteToken);
-    
+
     let [user, token] = await getUser(remoteUser);
     req.user = user;
     req.token = token;
@@ -48,7 +45,7 @@ async function exchangeCodeForToken(code1) {
   let credential = base64.encode(`${CLIENT_ID}:${CLIENT_SECRET}`);
   let tokenResponse = await superagent
     .post(tokenServerUrl)
-    .type('form')
+    .type("form")
     .send({
       code: code1,
       grant_type: "authorization_code",
@@ -78,7 +75,12 @@ async function getUser(remoteUser) {
     password: "mypass",
   };
 
-  let user = await users.save(userRecord);
+  try {
+    let user = await users.save(userRecord);
+  } catch (e) {
+    console.log("save error", e);
+    user = "anything";
+  }
   let token = users.generateToken(user);
 
   return [user, token];
