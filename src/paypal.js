@@ -27,18 +27,15 @@ const API_SERVER = "https://as-store.herokuapp.com/oauth";
 module.exports = async function authorize(req, res, next) {
   try {
     let code = req.query.code;
-    console.log("(1) CODE:", code);
 
     let remoteToken = await exchangeCodeForToken(code);
-    console.log("(2) ACCESS TOKEN:", remoteToken);
+    req.token = remoteToken;
+    
+    // let remoteUser = await getRemoteUserInfo(remoteToken);
 
-    let remoteUser = await getRemoteUserInfo(remoteToken);
-    console.log("(3) GITHUB USER", remoteUser);
-
-    let [user, token] = await getUser(remoteUser);
-    req.user = user;
-    req.token = token;
-    console.log("(4) LOCAL USER", user);
+    // let [user, token] = await getUser(remoteUser);
+    // req.user = user;
+    // req.token = token;
 
     next();
   } catch (e) {
@@ -53,7 +50,6 @@ async function exchangeCodeForToken(code) {
     .send({
       code: code,
       grant_type: "authorization_code",
-      redirect_uri: API_SERVER,
     })
     .set("Authorization", `Basic ${credential}`);
 
