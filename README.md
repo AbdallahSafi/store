@@ -1,3 +1,3 @@
-# [Report](Report.md)
+### [Report](Report.md)
 
-# [instructions](https://developer.paypal.com/docs/connect-with-paypal/integrate/) 
+### [instructions](https://developer.paypal.com/docs/connect-with-paypal/integrate/) 
