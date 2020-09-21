@@ -28,8 +28,8 @@ module.exports = async function authorize(req, res, next) {
   try {
     let code = req.query.code;
 
-    // let remoteToken = await exchangeCodeForToken(code);
-    req.token = code;
+    let remoteToken = await exchangeCodeForToken(code);
+    req.token = remoteToken;
     
     // let remoteUser = await getRemoteUserInfo(remoteToken);
 
@@ -51,7 +51,7 @@ async function exchangeCodeForToken(code) {
       code: code,
       grant_type: "authorization_code",
     })
-    .set("Authorization", `Basic ${credential}`);
+    .set("Authorization", `Basic QVp6REx1aHJGb0F4SGU2b2s3MUdlbGZfOUVqSVJMT2JpcmtDb2t1ZnpDbDJQTjFBMzZmR0t0M0tZT2prT2p0eHdkX1hxbXRSTEhiS012VW06RUpQbDlxQUJ1UlA4ckZzNzFpbFNlTjdjWW45ZmY4SW5YSWdJRUJnZTA5c3pqN2dfRmFtTm81NnU2X1l5V3loZ0o1V29ISVJFNGpXM19lbnQ=`);
 
   let access_token = tokenResponse.body.access_token;
 
