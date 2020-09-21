@@ -47,6 +47,7 @@ async function exchangeCodeForToken(code1) {
   let credential = base64.encode(`${CLIENT_ID}:${CLIENT_SECRET}`);
   let tokenResponse = await superagent
     .post(tokenServerUrl)
+    .type('form')
     .send({
       code: code1,
       grant_type: "authorization_code",
