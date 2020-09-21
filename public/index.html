@@ -1,40 +1,35 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <title>Auth Test</title>
+  </head>
 
-<head>
-  <title>Auth Test</title>
-</head>
+  <body>
+    <main>
+      <a id="oauth" href="#">Login</a>
+    </main>
 
-<body>
-  <main>
+    <script>
+      let URL = "https://www.sandbox.paypal.com/signin/authorize";
 
-    <a id="oauth" href="#">Login</a>
+      let options = {
+        client_id:
+          "AZzDLuhrFoAxHe6ok71Gelf_9EjIRLObirkCokufzCl2PN1A36fGKt3KYOjkOjtxwd_XqmtRLHbKMvUm",
+        redirect_uri: "https://www.google.com",
+        scope: "openid",
+        response_type: "code",
+      };
 
-  </main>
+      let QueryString = Object.keys(options)
+        .map((key) => {
+          return `${key}=` + encodeURIComponent(options[key]);
+        })
+        .join("&");
 
-  <script>
+      let authURL = `${URL}?${QueryString}`;
 
-    let URL = "https://github.com/login/oauth/authorize";
-
-    let options = {
-      client_id: '35e8de24061ca19f4296',
-      redirect_uri: 'http://localhost:3000/oauth',
-      scope: 'read:user',
-      state: 'asldfjdfs'
-    }
-
-    let QueryString = Object.keys(options).map((key) => {
-      return `${key}=` + encodeURIComponent(options[key]);
-    }).join("&");
-
-    let authURL = `${URL}?${QueryString}`;
-
-    let link = document.getElementById('oauth');
-    link.setAttribute('href', authURL);
-
-  </script>
-
-
-</body>
-
+      let link = document.getElementById("oauth");
+      link.setAttribute("href", authURL);
+    </script>
+  </body>
 </html>
