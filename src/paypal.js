@@ -77,11 +77,12 @@ async function getUser(remoteUser) {
 
   try {
     let user = await users.save(userRecord);
+    let token = users.generateToken(user);
+    return [user, token];
   } catch (e) {
     console.log("save error", e);
-    user = "anything";
+    let user = "anything";
+    let token = "anything";
+    return [user, token];
   }
-  let token = users.generateToken(user);
-
-  return [user, token];
 }
