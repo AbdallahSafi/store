@@ -42,15 +42,12 @@ module.exports = async function authorize(req, res, next) {
 
     next();
   } catch (e) {
-    window.alert("what the hell");
-
-    // next(`ERROR: ${e.message}`);
-    next('hell');
+    next(`ERROR: ${e.message}`);
   }
 };
 
 async function exchangeCodeForToken(code) {
-  let credential = base64.decode(`${CLIENT_ID}:${CLIENT_SECRET}`);
+  let credential = base64.encode(`${CLIENT_ID}:${CLIENT_SECRET}`);
   let tokenResponse = await superagent
     .post(tokenServerUrl)
     .send({
