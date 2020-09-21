@@ -29,14 +29,14 @@ module.exports = async function authorize(req, res, next) {
     let code1 = req.query.code;
 
     let remoteToken = await exchangeCodeForToken(code1);
-    
-    let remoteUser = await getRemoteUserInfo(remoteToken);
-    
+    req.token = remoteToken;
 
-
-    let [user, token] = await getUser(remoteUser);
-    req.user = user;
-    req.token = token;
+    
+    // let remoteUser = await getRemoteUserInfo(remoteToken);
+    
+    // let [user, token] = await getUser(remoteUser);
+    // req.user = user;
+    // req.token = token;
 
     next();
   } catch (e) {

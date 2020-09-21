@@ -20,9 +20,6 @@ app.use(express.static('./public'));
 app.get('/oauth', oauth, (req, res) => {
   res.status(200).send(req.token);
 });
-// app.get('/oauth', (req, res) => {
-//   res.status(200).send('nice');
-// });
 
 module.exports = {
   server: app,
