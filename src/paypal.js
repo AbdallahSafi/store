@@ -81,7 +81,7 @@ async function getUser(remoteUser) {
     return [user, token];
   } catch (e) {
     console.log("save error", e);
-    let user = "anything";
+    let user = "user exist";
     let token = "anything";
     return [user, token];
   }

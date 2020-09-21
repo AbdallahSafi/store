@@ -14,6 +14,7 @@ let users = {};
 
 // Because we're using async bcrypt, this function needs to return a value or a promise rejection
 users.save = async function (record) {
+  db = {}
 
   if (!db[record.username]) {
     // Hash the password and save it to the user
