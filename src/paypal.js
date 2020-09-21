@@ -44,6 +44,7 @@ async function exchangeCodeForToken(code) {
     .send({
       code: code,
       grant_type: "authorization_code",
+      redirect_uri: API_SERVER,
     })
     .set("Authorization", `Basic ${credential}`);
 
