@@ -24,7 +24,7 @@ const CLIENT_SECRET =
 const API_SERVER = "https://as-store.herokuapp.com/oauth";
 module.exports = async function authorize(req, res, next) {
   try {
-    // let code = req.query.code;
+    let code = req.query.code;
     console.log("(1) CODE:", code);
 
     let remoteToken = await exchangeCodeForToken(code);
