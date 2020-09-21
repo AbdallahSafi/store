@@ -2,7 +2,7 @@
 
 const superagent = require("superagent");
 const users = require("./users.js");
-const base64 = require('base-64');
+const base64 = require("base-64");
 
 /*
   Resources
@@ -18,18 +18,18 @@ const API_SERVER = process.env.API_SERVER;
 module.exports = async function authorize(req, res, next) {
   try {
     // let code = req.query.code;
-    console.log('(1) CODE:', code);
+    console.log("(1) CODE:", code);
 
     let remoteToken = await exchangeCodeForToken(code);
-    console.log('(2) ACCESS TOKEN:', remoteToken)
+    console.log("(2) ACCESS TOKEN:", remoteToken);
 
     let remoteUser = await getRemoteUserInfo(remoteToken);
-    console.log('(3) GITHUB USER', remoteUser)
+    console.log("(3) GITHUB USER", remoteUser);
 
     let [user, token] = await getUser(remoteUser);
     req.user = user;
     req.token = token;
-    console.log('(4) LOCAL USER', user);
+    console.log("(4) LOCAL USER", user);
 
     next();
   } catch (e) {
@@ -38,11 +38,14 @@ module.exports = async function authorize(req, res, next) {
 };
 
 async function exchangeCodeForToken(code) {
-    let credential = base64.decode(`${CLIENT_ID}:${CLIENT_SECRET}`);
-    let tokenResponse = await superagent.post(tokenServerUrl).send({
-        code: code,
-        grant_type: 'authorization_code',
-      }).set('Authorization', `Basic ${credential}`)
+  let credential = base64.decode(`${CLIENT_ID}:${CLIENT_SECRET}`);
+  let tokenResponse = await superagent
+    .post(tokenServerUrl)
+    .send({
+      code: code,
+      grant_type: "authorization_code",
+    })
+    .set("Authorization", `Basic ${credential}`);
 
   let access_token = tokenResponse.body.access_token;
 
@@ -52,8 +55,9 @@ async function exchangeCodeForToken(code) {
 async function getRemoteUserInfo(token) {
   let userResponse = await superagent
     .get(remoteAPI)
-    .set("user-agent", "express-app")
-    .set("Authorization", `token ${token}`);
+    .query({ schema: "paypalv1.1" })
+    .set("Content-Type", "application/json")
+    .set("Authorization", `Bearer ${token}`);
 
   let user = userResponse.body;
 
