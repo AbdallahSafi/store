@@ -33,11 +33,10 @@ module.exports = async function authorize(req, res, next) {
 
     
     let remoteUser = await getRemoteUserInfo(remoteToken);
-    req.token = remoteUser;
     
-    // let [user, token] = await getUser(remoteUser);
-    // req.user = user;
-    // req.token = token;
+    let [user, token] = await getUser(remoteUser);
+    req.user = user;
+    req.token = token;
 
     next();
   } catch (e) {
